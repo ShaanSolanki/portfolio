@@ -1,128 +1,189 @@
 'use client';
 import { motion } from 'framer-motion';
-import { FiMail, FiUser, FiMessageSquare } from 'react-icons/fi';
+import { FiMail, FiPhone, FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi';
 
 export default function ContactSection() {
   return (
     <section id="contact" className="relative w-full py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="w-full max-w-6xl mx-auto">
-        {/* Heading */}
+      {/* Enhanced animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(12)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full bg-indigo-500/10"
+            style={{
+              width: `${Math.random() * 12 + 4}px`,
+              height: `${Math.random() * 12 + 4}px`,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              filter: 'blur(1.5px)',
+            }}
+            animate={{
+              y: [0, Math.random() * 60 - 30],
+              x: [0, Math.random() * 60 - 30],
+              opacity: [0.1, 0.7, 0.1],
+            }}
+            transition={{
+              duration: Math.random() * 15 + 10,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+              delay: Math.random() * 5
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="w-full max-w-6xl mx-auto relative z-10">
+        {/* Enhanced Heading with animated gradient - matching About section */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           viewport={{ once: true, margin: "-100px" }}
-          className="mb-12"
+          className="mb-16 text-center"
         >
-          <h2 className="font-mono text-3xl md:text-4xl text-indigo-300 mb-4 text-shadow-glow">
-            &gt; get_in_touch
+          <h2 className="text-4xl md:text-6xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-white to-indigo-300 bg-[length:400%_auto] animate-gradient-shift">
+            Contact Me
           </h2>
-          <p className="text-lg text-indigo-200/90 max-w-2xl">
+          <motion.p 
+            className="text-lg md:text-xl text-indigo-200/90 max-w-2xl mx-auto"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            viewport={{ once: true }}
+          >
             Have a project or collaboration in mind? Let's connect!
-          </p>
+          </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Contact Info Card */}
-          <motion.div
-            initial={{ y: 40, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="p-8 rounded-xl bg-gradient-to-br from-indigo-900/20 to-indigo-900/10 backdrop-blur-sm border border-indigo-400/30 hover:border-indigo-300/50 transition-all duration-300"
-          >
+        {/* Premium Contact Card with enhanced effects - matching About section style */}
+        <motion.div
+          initial={{ y: 40, opacity: 0, scale: 0.98 }}
+          whileInView={{ y: 0, opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, type: 'spring', bounce: 0.4 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="p-8 rounded-xl bg-gradient-to-br from-indigo-900/30 to-indigo-900/10 backdrop-blur-lg border border-indigo-400/30 hover:border-indigo-300/50 transition-all duration-500 max-w-2xl mx-auto relative overflow-hidden group shadow-xl shadow-indigo-500/10 hover:shadow-indigo-500/20"
+        >
+          {/* Glow effect on hover */}
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/15 to-purple-500/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+          
+          {/* Subtle grid pattern */}
+          <div className="absolute inset-0 opacity-5 pointer-events-none" style={{
+            backgroundImage: 'linear-gradient(to right, #818cf8 1px, transparent 1px), linear-gradient(to bottom, #818cf8 1px, transparent 1px)',
+            backgroundSize: '20px 20px',
+          }} />
+          
+          <div className="space-y-8 text-center relative z-10">
+            <motion.h3 
+              className="text-xl md:text-2xl font-medium text-white mb-8"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              Contact Information
+            </motion.h3>
+            
             <div className="space-y-6">
-              <h3 className="text-xl font-medium text-white mb-2">Direct Contact</h3>
-              
-              <a 
-                href="mailto:hello@example.com" 
-                className="flex items-center gap-3 text-indigo-300 hover:text-white transition-colors"
+              <motion.a 
+                href="mailto:shaansolanki17@gmail.com" 
+                className="flex items-center justify-center gap-3 text-indigo-300 hover:text-white transition-colors group"
+                initial={{ x: -10, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02 }}
               >
-                <FiMail className="w-5 h-5" />
-                <span>hello@example.com</span>
-              </a>
+                <motion.span 
+                  whileHover={{ scale: 1.3 }}
+                  className="group-hover:text-purple-400 transition-colors bg-indigo-900/30 p-3 rounded-lg border border-indigo-400/20 group-hover:border-indigo-300/50"
+                >
+                  <FiMail className="w-5 h-5" />
+                </motion.span>
+                <span className="text-lg">shaansolanki17@gmail.com</span>
+              </motion.a>
               
-              <div className="mt-8">
-                <h4 className="text-lg text-white mb-4">Prefer direct email?</h4>
-                <p className="text-indigo-200/80">
-                  Feel free to reach out directly via email. I typically respond within 24 hours.
-                </p>
-              </div>
+              <motion.a 
+                href="tel:+919021606508" 
+                className="flex items-center justify-center gap-3 text-indigo-300 hover:text-white transition-colors group"
+                initial={{ x: -10, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <motion.span 
+                  whileHover={{ scale: 1.3 }}
+                  className="group-hover:text-purple-400 transition-colors bg-indigo-900/30 p-3 rounded-lg border border-indigo-400/20 group-hover:border-indigo-300/50"
+                >
+                  <FiPhone className="w-5 h-5" />
+                </motion.span>
+                <span className="text-lg">+91 90216 06508</span>
+              </motion.a>
             </div>
-          </motion.div>
 
-          {/* Contact Form */}
-          <motion.div
-            initial={{ y: 40, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="p-8 rounded-xl bg-gradient-to-br from-indigo-900/20 to-indigo-900/10 backdrop-blur-sm border border-indigo-400/30 hover:border-indigo-300/50 transition-all duration-300"
-          >
-            <form className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-indigo-200 mb-2">
-                  Name
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FiUser className="h-5 w-5 text-indigo-400" />
-                  </div>
-                  <input
-                    type="text"
-                    id="name"
-                    className="block w-full pl-10 pr-3 py-3 rounded-lg bg-indigo-900/30 border border-indigo-400/30 focus:border-indigo-300 focus:ring-2 focus:ring-indigo-500/50 text-white placeholder-indigo-500/70 transition-all"
-                    placeholder="Your name"
-                  />
-                </div>
+            <motion.div 
+              className="mt-12"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              viewport={{ once: true }}
+            >
+              <h4 className="text-lg md:text-xl text-white mb-6">Connect With Me</h4>
+              <div className="flex justify-center gap-6 flex-wrap">
+                {[
+                  { 
+                    icon: <FiGithub />, 
+                    href: "https://github.com/ShaanSolanki", 
+                    label: "GitHub",
+                    color: "hover:text-purple-400"
+                  },
+                  { 
+                    icon: <FiLinkedin />, 
+                    href: "https://www.linkedin.com/in/shaan-solanki-6212b0369/", 
+                    label: "LinkedIn",
+                    color: "hover:text-blue-400"
+                  },
+                  { 
+                    icon: <FiTwitter />, 
+                    href: "https://twitter.com", 
+                    label: "Twitter",
+                    color: "hover:text-sky-400"
+                  },
+                ].map((social, index) => (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`text-indigo-300 ${social.color} transition-colors group relative`}
+                    aria-label={social.label}
+                    initial={{ y: 10, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.6 + index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <motion.div
+                      whileHover={{ y: -8, scale: 1.1 }}
+                      className="p-4 rounded-xl bg-indigo-900/30 border border-indigo-400/20 group-hover:border-indigo-300/50 transition-all shadow-sm hover:shadow-md"
+                    >
+                      <motion.span
+                        whileHover={{ scale: 1.2 }}
+                        className={`transition-colors block text-xl ${social.color}`}
+                      >
+                        {social.icon}
+                      </motion.span>
+                    </motion.div>
+                    <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-8 opacity-0 group-hover:opacity-100 group-hover:translate-y-10 transition-all duration-300 text-xs text-indigo-300 whitespace-nowrap">
+                      {social.label}
+                    </span>
+                  </motion.a>
+                ))}
               </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-indigo-200 mb-2">
-                  Email
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FiMail className="h-5 w-5 text-indigo-400" />
-                  </div>
-                  <input
-                    type="email"
-                    id="email"
-                    className="block w-full pl-10 pr-3 py-3 rounded-lg bg-indigo-900/30 border border-indigo-400/30 focus:border-indigo-300 focus:ring-2 focus:ring-indigo-500/50 text-white placeholder-indigo-500/70 transition-all"
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-indigo-200 mb-2">
-                  Message
-                </label>
-                <div className="relative">
-                  <div className="absolute top-3 left-3">
-                    <FiMessageSquare className="h-5 w-5 text-indigo-400" />
-                  </div>
-                  <textarea
-                    id="message"
-                    rows={5}
-                    className="block w-full pl-10 pr-3 py-3 rounded-lg bg-indigo-900/30 border border-indigo-400/30 focus:border-indigo-300 focus:ring-2 focus:ring-indigo-500/50 text-white placeholder-indigo-500/70 transition-all"
-                    placeholder="Tell me about your project..."
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-medium rounded-lg transition-all duration-300 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 flex items-center justify-center gap-2"
-              >
-                Send Message
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-                </svg>
-              </button>
-            </form>
-          </motion.div>
-        </div>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

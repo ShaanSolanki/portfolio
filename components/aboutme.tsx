@@ -247,7 +247,7 @@ export default function About() {
                 className="relative px-8 py-4 bg-transparent border-2 border-indigo-500/90 hover:border-indigo-400 text-white font-medium rounded-xl transition-all duration-500 group shadow-xl shadow-indigo-500/20"
               >
                 <span className="relative z-10 flex items-center justify-center gap-3">
-                  Let's Connect
+                  Let&apos;s Connect
                   <FiMail className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </span>
                 <span className="absolute inset-0 bg-indigo-500/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />

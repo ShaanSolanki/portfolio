@@ -53,7 +53,7 @@ export default function ContactSection() {
             transition={{ delay: 0.2 }}
             viewport={{ once: true }}
           >
-            Have a project or collaboration in mind? Let's connect!
+            Have a project or collaboration in mind? Let&apos;s connect!
           </motion.p>
         </motion.div>
 

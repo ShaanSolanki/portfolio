@@ -7,6 +7,12 @@ import { motion } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Define type for custom CSS properties
+interface CustomCSSProperties extends React.CSSProperties {
+  '--glow-opacity'?: number;
+  '--glow-scale'?: number;
+}
+
 type Skill = {
   name: string;
   level: number;
@@ -92,39 +98,39 @@ export default function About() {
 
     // Button hover effects
     const buttons = buttonsRef.current.querySelectorAll('button, a');
-    buttons.forEach(btn => {
+    buttons.forEach((btn) => {
+      const buttonEl = btn as HTMLElement;
       const glow = document.createElement('div');
       glow.className = 'absolute inset-0 rounded-xl opacity-0 pointer-events-none';
       glow.style.background = 'radial-gradient(circle at center, rgba(99, 102, 241, 0.8) 0%, transparent 70%)';
       glow.style.transition = 'opacity 0.5s ease';
       glow.style.filter = 'blur(10px)';
-      btn.appendChild(glow);
+      buttonEl.appendChild(glow);
       
-      btn.addEventListener('mousemove', (e: Event) => {
-        const mouseEvent = e as MouseEvent;
-        const rect = btn.getBoundingClientRect();
-        const x = mouseEvent.clientX - rect.left;
-        const y = mouseEvent.clientY - rect.top;
+      const handleMouseMove = (e: MouseEvent) => {
+        const rect = buttonEl.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
         
-        gsap.to(btn, {
+        gsap.to(buttonEl, {
           x: (x - rect.width/2) * 0.2,
           y: (y - rect.height/2) * 0.2,
           duration: 0.8,
           ease: 'power2.out'
         });
-      });
+      };
       
-      btn.addEventListener('mouseleave', () => {
-        gsap.to(btn, {
+      const handleMouseLeave = () => {
+        gsap.to(buttonEl, {
           x: 0,
           y: 0,
           duration: 0.8,
           ease: 'elastic.out(1, 0.5)'
         });
-      });
+      };
       
-      btn.addEventListener('mouseenter', () => {
-        gsap.to(btn, {
+      const handleMouseEnter = () => {
+        gsap.to(buttonEl, {
           scale: 1.1,
           duration: 0.5,
           ease: 'back.out(2.5)'
@@ -133,19 +139,17 @@ export default function About() {
           opacity: 0.9,
           duration: 0.5
         });
-      });
+      };
       
-      btn.addEventListener('mouseleave', () => {
-        gsap.to(btn, {
-          scale: 1,
-          duration: 0.7,
-          ease: 'elastic.out(1, 0.5)'
-        });
-        gsap.to(glow, {
-          opacity: 0,
-          duration: 0.5
-        });
-      });
+      buttonEl.addEventListener('mousemove', handleMouseMove);
+      buttonEl.addEventListener('mouseleave', handleMouseLeave);
+      buttonEl.addEventListener('mouseenter', handleMouseEnter);
+      
+      return () => {
+        buttonEl.removeEventListener('mousemove', handleMouseMove);
+        buttonEl.removeEventListener('mouseleave', handleMouseLeave);
+        buttonEl.removeEventListener('mouseenter', handleMouseEnter);
+      };
     });
 
     return () => {
@@ -266,8 +270,8 @@ export default function About() {
               {/* Interactive 3D avatar placeholder */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="relative w-64 h-64 rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center">
-                  <div className="absolute w-full h-full rounded-full border-2 border-indigo-400/30 animate-spin-slow" style={{ animationDuration: '20s' }} />
-                  <div className="absolute w-3/4 h-3/4 rounded-full border border-indigo-400/20 animate-spin-slow-reverse" style={{ animationDuration: '25s' }} />
+                  <div className="absolute w-full h-full rounded-full border-2 border-indigo-400/30 animate-spin-slow" style={{ animationDuration: '20s' } as CustomCSSProperties} />
+                  <div className="absolute w-3/4 h-3/4 rounded-full border border-indigo-400/20 animate-spin-slow-reverse" style={{ animationDuration: '25s' } as CustomCSSProperties} />
                   <svg 
                     className="w-1/2 h-1/2 text-indigo-300/70" 
                     fill="none" 
@@ -309,7 +313,7 @@ export default function About() {
                   style={{
                     top: `${Math.random() * 70 + 15}%`,
                     left: `${Math.random() * 70 + 15}%`,
-                  }}
+                  } as CustomCSSProperties}
                 >
                   {tech}
                 </motion.div>

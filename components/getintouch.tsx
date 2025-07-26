@@ -2,7 +2,36 @@
 import { motion } from 'framer-motion';
 import { FiMail, FiPhone, FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi';
 
+// Define type for social media links
+type SocialLink = {
+  icon: React.ReactNode;
+  href: string;
+  label: string;
+  color: string;
+};
+
 export default function ContactSection() {
+  const socialLinks: SocialLink[] = [
+    { 
+      icon: <FiGithub />, 
+      href: "https://github.com/ShaanSolanki", 
+      label: "GitHub",
+      color: "hover:text-purple-400"
+    },
+    { 
+      icon: <FiLinkedin />, 
+      href: "https://www.linkedin.com/in/shaan-solanki-6212b0369/", 
+      label: "LinkedIn",
+      color: "hover:text-blue-400"
+    },
+    { 
+      icon: <FiTwitter />, 
+      href: "https://twitter.com", 
+      label: "Twitter",
+      color: "hover:text-sky-400"
+    },
+  ];
+
   return (
     <section id="contact" className="relative w-full py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Enhanced animated background elements */}
@@ -35,7 +64,7 @@ export default function ContactSection() {
       </div>
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
-        {/* Enhanced Heading with animated gradient - matching About section */}
+        {/* Enhanced Heading with animated gradient */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -57,7 +86,7 @@ export default function ContactSection() {
           </motion.p>
         </motion.div>
 
-        {/* Premium Contact Card with enhanced effects - matching About section style */}
+        {/* Premium Contact Card with enhanced effects */}
         <motion.div
           initial={{ y: 40, opacity: 0, scale: 0.98 }}
           whileInView={{ y: 0, opacity: 1, scale: 1 }}
@@ -132,26 +161,7 @@ export default function ContactSection() {
             >
               <h4 className="text-lg md:text-xl text-white mb-6">Connect With Me</h4>
               <div className="flex justify-center gap-6 flex-wrap">
-                {[
-                  { 
-                    icon: <FiGithub />, 
-                    href: "https://github.com/ShaanSolanki", 
-                    label: "GitHub",
-                    color: "hover:text-purple-400"
-                  },
-                  { 
-                    icon: <FiLinkedin />, 
-                    href: "https://www.linkedin.com/in/shaan-solanki-6212b0369/", 
-                    label: "LinkedIn",
-                    color: "hover:text-blue-400"
-                  },
-                  { 
-                    icon: <FiTwitter />, 
-                    href: "https://twitter.com", 
-                    label: "Twitter",
-                    color: "hover:text-sky-400"
-                  },
-                ].map((social, index) => (
+                {socialLinks.map((social, index) => (
                   <motion.a
                     key={social.label}
                     href={social.href}

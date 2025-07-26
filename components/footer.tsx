@@ -3,6 +3,18 @@ import { motion } from 'framer-motion';
 import { FiGithub, FiLinkedin, FiTwitter, FiMail, FiExternalLink } from 'react-icons/fi';
 import { usePathname } from 'next/navigation';
 
+// Define types for navigation and social links
+type NavLink = {
+  name: string;
+  path: string;
+};
+
+type SocialLink = {
+  icon: React.ReactNode;
+  path: string;
+  label: string;
+};
+
 export default function Footer() {
   const pathname = usePathname();
 
@@ -19,7 +31,7 @@ export default function Footer() {
     }
   };
 
-  const navLinks = [
+  const navLinks: NavLink[] = [
     { name: "Home", path: "/#home" },
     { name: "Services", path: "/#services" },
     { name: "Skills", path: "/#skills" },
@@ -27,7 +39,7 @@ export default function Footer() {
     { name: "Contact", path: "/#contact" },
   ];
 
-  const socialLinks = [
+  const socialLinks: SocialLink[] = [
     { icon: <FiGithub />, path: "https://github.com/ShaanSolanki", label: "GitHub" },
     { icon: <FiLinkedin />, path: "https://linkedin.com/in/shaan-solanki-6212b0369/", label: "LinkedIn" },
     { icon: <FiTwitter />, path: "https://twitter.com", label: "Twitter" },
@@ -36,7 +48,7 @@ export default function Footer() {
 
   return (
     <footer className="relative w-full py-12 px-4 sm:px-6 lg:px-8 overflow-hidden border-t border-indigo-500/20">
-      <div className="w-full max-w-7xl mx-auto"> {/* Increased max-width to 7xl */}
+      <div className="w-full max-w-7xl mx-auto">
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}

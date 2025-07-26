@@ -10,6 +10,18 @@ import { RiMoonFill, RiSunFill } from "react-icons/ri";
 import clsx from "clsx";
 import { useTheme } from "next-themes";
 
+// Define types for navigation and social links
+type NavLink = {
+  name: string;
+  path: string;
+};
+
+type SocialLink = {
+  icon: React.ReactNode;
+  path: string;
+  label: string;
+};
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,7 +35,7 @@ export default function Navbar() {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
 
-  const navLinks = [
+  const navLinks: NavLink[] = [
     { name: "Home", path: "/" },
     { name: "Services", path: "/#services" },
     { name: "Skills", path: "/#skills" },
@@ -31,7 +43,7 @@ export default function Navbar() {
     { name: "Contact", path: "/#contact" },
   ];
 
-  const socialLinks = [
+  const socialLinks: SocialLink[] = [
     { icon: <FaGithub />, path: "https://github.com/ShaanSolanki", label: "GitHub" },
     { icon: <FaLinkedin />, path: "https://www.linkedin.com/in/shaan-solanki-6212b0369/", label: "LinkedIn" },
     { icon: <FaTwitter />, path: "https://twitter.com", label: "Twitter" },

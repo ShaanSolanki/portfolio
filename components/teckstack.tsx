@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -18,16 +17,32 @@ import {
   SiThreedotjs,
 } from "react-icons/si"
 
+// Define type for custom CSS properties
+interface CustomCSSProperties extends React.CSSProperties {
+  '--glow-opacity'?: number | string;
+}
+
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
 }
+
+type TechItem = {
+  name: string;
+  icon: React.ReactNode;
+  label: string;
+};
+
+type TechCategory = {
+  title: string;
+  items: TechItem[];
+};
 
 export default function TechStack() {
   const sectionRef = useRef<HTMLElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
 
-  const techData = [
+  const techData: TechCategory[] = [
     {
       title: "Frontend",
       items: [
@@ -63,6 +78,8 @@ export default function TechStack() {
   ]
 
   useEffect(() => {
+    if (!titleRef.current || !sectionRef.current) return
+
     gsap.from(titleRef.current, {
       y: 20,
       opacity: 0,
@@ -74,7 +91,9 @@ export default function TechStack() {
       },
     })
 
-    gsap.from(gridRef.current?.children || [], {
+    if (!gridRef.current) return
+
+    gsap.from(gridRef.current.children, {
       y: 30,
       opacity: 0,
       stagger: 0.1,
@@ -88,25 +107,33 @@ export default function TechStack() {
       },
     })
 
-    const cards = gridRef.current?.querySelectorAll(".tech-card") || []
+    const cards = gridRef.current.querySelectorAll<HTMLElement>(".tech-card")
     cards.forEach((card) => {
-      card.addEventListener("mouseenter", () => {
+      const handleMouseEnter = () => {
         gsap.to(card, {
           scale: 1.03,
           "--glow-opacity": 0.3,
           duration: 0.3,
           ease: "power1.out",
         })
-      })
+      }
 
-      card.addEventListener("mouseleave", () => {
+      const handleMouseLeave = () => {
         gsap.to(card, {
           scale: 1,
           "--glow-opacity": 0,
           duration: 0.3,
           ease: "power1.out",
         })
-      })
+      }
+
+      card.addEventListener("mouseenter", handleMouseEnter)
+      card.addEventListener("mouseleave", handleMouseLeave)
+
+      return () => {
+        card.removeEventListener("mouseenter", handleMouseEnter)
+        card.removeEventListener("mouseleave", handleMouseLeave)
+      }
     })
 
     return () => ScrollTrigger.getAll().forEach((t) => t.kill())
@@ -137,7 +164,7 @@ export default function TechStack() {
                   <div
                     key={tech.name}
                     className="tech-card relative p-3 sm:p-4 rounded-lg bg-white/5 backdrop-blur-sm border border-indigo-400/10 hover:border-indigo-300/30 transition-all duration-300"
-                    style={{ "--glow-opacity": 0 } as React.CSSProperties}
+                    style={{ "--glow-opacity": 0 } as CustomCSSProperties}
                   >
                     <div className="flex items-center gap-3">
                       <span className="text-xl sm:text-2xl text-indigo-300">{tech.icon}</span>

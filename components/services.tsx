@@ -9,10 +9,22 @@ import {
   FaCloudUploadAlt 
 } from 'react-icons/fa';
 
+// Define type for custom CSS properties
+interface CustomCSSProperties extends React.CSSProperties {
+  '--glow-opacity'?: number | string;
+}
+
 // Register ScrollTrigger plugin
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
+
+type Service = {
+  title: string;
+  icon: React.ReactNode;
+  description: string;
+  label: string;
+};
 
 const ServicesSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -20,7 +32,7 @@ const ServicesSection = () => {
   const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!headingRef.current || !gridRef.current) return;
+    if (!headingRef.current || !gridRef.current || !sectionRef.current) return;
 
     // Animation timeline
     const tl = gsap.timeline({
@@ -39,7 +51,7 @@ const ServicesSection = () => {
       skewY: 5,
       ease: 'back.out(1.7)'
     })
-    .from(gridRef.current?.children || [], {
+    .from(Array.from(gridRef.current.children), {
       y: 40,
       opacity: 0,
       stagger: 0.15,
@@ -48,25 +60,33 @@ const ServicesSection = () => {
     }, "-=0.8");
 
     // Hover effects
-    const cards = gridRef.current?.querySelectorAll('.service-card') || [];
+    const cards = gridRef.current.querySelectorAll<HTMLElement>('.service-card');
     cards.forEach(card => {
-      card.addEventListener('mouseenter', () => {
+      const handleMouseEnter = () => {
         gsap.to(card, {
           scale: 1.03,
           '--glow-opacity': 0.3,
           duration: 0.3,
           ease: 'power1.out'
         });
-      });
+      };
 
-      card.addEventListener('mouseleave', () => {
+      const handleMouseLeave = () => {
         gsap.to(card, {
           scale: 1,
           '--glow-opacity': 0,
           duration: 0.3,
           ease: 'power1.out'
         });
-      });
+      };
+
+      card.addEventListener('mouseenter', handleMouseEnter);
+      card.addEventListener('mouseleave', handleMouseLeave);
+
+      return () => {
+        card.removeEventListener('mouseenter', handleMouseEnter);
+        card.removeEventListener('mouseleave', handleMouseLeave);
+      };
     });
 
     return () => {
@@ -74,7 +94,7 @@ const ServicesSection = () => {
     };
   }, []);
 
-  const services = [
+  const services: Service[] = [
     {
       title: 'Web Development',
       icon: <FaCode className="text-2xl sm:text-3xl text-indigo-300" />,
@@ -109,7 +129,7 @@ const ServicesSection = () => {
         background: 'transparent', 
         zIndex: 10,
         isolation: 'isolate'
-      }}
+      } as CustomCSSProperties}
     >
       <div className="w-full max-w-6xl mx-auto">
         <div className="flex flex-col">
@@ -118,7 +138,7 @@ const ServicesSection = () => {
             ref={headingRef}
             className="text-4xl md:text-6xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-white to-indigo-300 bg-[length:400%_auto] animate-gradient-shift"
             style={{
-              textAlign: 'left' // Changed from center to left
+              textAlign: 'left'
             }}
           >
             services provided
@@ -141,9 +161,8 @@ const ServicesSection = () => {
                   opacity: 1,
                   transform: 'translateY(0)',
                   background: 'linear-gradient(135deg, rgba(49, 46, 129, 0.2) 0%, rgba(67, 56, 202, 0.1) 100%)',
-                  // @ts-ignore: Allow custom CSS variable
-                  ['--glow-opacity' as any]: 0
-                }}
+                  '--glow-opacity': 0
+                } as CustomCSSProperties}
               >
                 <div className="mb-4 p-3 rounded-full bg-indigo-900/30 border border-indigo-400/30">
                   {service.icon}

@@ -141,7 +141,7 @@ const ServicesSection = () => {
               textAlign: 'left'
             }}
           >
-            services provided
+            Services provided
           </h2>
 
           <div 

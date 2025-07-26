@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 type Skill = {
   name: string;
   level: number;
-  icon: JSX.Element;
+  icon: React.ReactNode;
   color: string;
 };
 
@@ -32,15 +32,17 @@ export default function About() {
   ];
 
   const skills: Skill[] = [
-    { name: 'React/Next.js', level: 95, icon: <FiLayers />, color: 'bg-blue-500' },
-    { name: 'TypeScript', level: 90, icon: <FiCode />, color: 'bg-indigo-500' },
-    { name: 'Node.js', level: 85, icon: <FiCpu />, color: 'bg-green-500' },
-    { name: 'Three.js', level: 80, icon: <FiLayers />, color: 'bg-purple-500' },
-    { name: 'UI/UX Design', level: 75, icon: <FiLayers />, color: 'bg-pink-500' },
-    { name: 'DevOps', level: 70, icon: <FiCpu />, color: 'bg-yellow-500' }
+    { name: 'React/Next.js', level: 95, icon: <FiLayers className="w-4 h-4" />, color: 'bg-blue-500' },
+    { name: 'TypeScript', level: 90, icon: <FiCode className="w-4 h-4" />, color: 'bg-indigo-500' },
+    { name: 'Node.js', level: 85, icon: <FiCpu className="w-4 h-4" />, color: 'bg-green-500' },
+    { name: 'Three.js', level: 80, icon: <FiLayers className="w-4 h-4" />, color: 'bg-purple-500' },
+    { name: 'UI/UX Design', level: 75, icon: <FiLayers className="w-4 h-4" />, color: 'bg-pink-500' },
+    { name: 'DevOps', level: 70, icon: <FiCpu className="w-4 h-4" />, color: 'bg-yellow-500' }
   ];
 
   useEffect(() => {
+    if (!sectionRef.current || !headingRef.current || !textRef.current || !imageRef.current || !buttonsRef.current) return;
+
     // Animation timeline
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -57,7 +59,7 @@ export default function About() {
       skewY: 5,
       ease: 'back.out(1.7)'
     })
-    .from(textRef.current?.children || [], {
+    .from(Array.from(textRef.current.children), {
       y: 40,
       opacity: 0,
       stagger: 0.15,
@@ -71,7 +73,7 @@ export default function About() {
       ease: 'elastic.out(1, 0.5)',
       scale: 0.8
     }, "-=0.6")
-    .from(buttonsRef.current?.children || [], {
+    .from(Array.from(buttonsRef.current.children), {
       y: 30,
       opacity: 0,
       stagger: 0.2,
@@ -89,8 +91,8 @@ export default function About() {
     });
 
     // Button hover effects
-    const buttons = buttonsRef.current?.querySelectorAll('button, a');
-    buttons?.forEach(btn => {
+    const buttons = buttonsRef.current.querySelectorAll('button, a');
+    buttons.forEach(btn => {
       const glow = document.createElement('div');
       glow.className = 'absolute inset-0 rounded-xl opacity-0 pointer-events-none';
       glow.style.background = 'radial-gradient(circle at center, rgba(99, 102, 241, 0.8) 0%, transparent 70%)';
@@ -98,7 +100,7 @@ export default function About() {
       glow.style.filter = 'blur(10px)';
       btn.appendChild(glow);
       
-      btn.addEventListener('mousemove', (e) => {
+      btn.addEventListener('mousemove', (e: Event) => {
         const mouseEvent = e as MouseEvent;
         const rect = btn.getBoundingClientRect();
         const x = mouseEvent.clientX - rect.left;

@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer"; // ✅ Import Footer
+import LayoutWithBackground from "@/components/LayoutWithBackground"; // ✅ Background wrapper
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,7 +31,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <LayoutWithBackground>
+          <Navbar />
+          <div className="relative z-10">
+            {children}
+            <Footer /> {/* ✅ Footer placed right after all page content */}
+          </div>
+        </LayoutWithBackground>
       </body>
     </html>
   );
